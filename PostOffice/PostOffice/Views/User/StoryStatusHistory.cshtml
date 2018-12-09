@@ -1,0 +1,75 @@
+﻿
+@{
+                ViewBag.Title = "Story Status History";
+                Layout = "~/Views/Shared/_UserLayout.cshtml";
+                WebGrid UserPackagesGrid = new WebGrid(source: ViewBag.UserPackagesList, defaultSort: "FIN_COST", canPage: false);//, rowsPerPage: 5);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/PackageStatusStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewBag.Title</title>
+    <style>
+
+        .grid_table thead th:first-child {
+            width: 10%;
+        }
+
+            .grid_table thead th:first-child + th {
+                width: 10%;
+            }
+
+                .grid_table thead th:first-child + th + th {
+                    width: 10%;
+                }
+
+                    .grid_table thead th:first-child + th + th + th {
+                        width: 10%;
+                    }
+
+                        .grid_table thead th:first-child + th + th + th + th {
+                            width: 10%;
+                        }
+
+    </style>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+
+    <div class="main">
+        <table class="table_rt">
+            <tr class="tr_rt">
+                <td class="td_rt">
+                    @using (Html.BeginForm("StoryStatusHistory", "User", FormMethod.Get))
+                    {
+                        <div class="search">
+                            <label>Search Package</label>
+                            <input type="text" name="search" value="@ViewBag.search" placeholder="Search" />
+                            <input type="submit" value="Search" />
+                        </div>
+                    }
+                </td>
+            </tr>
+        </table>
+        @UserPackagesGrid.GetHtml(
+            tableStyle: "grid_table scroll",
+            htmlAttributes: new {@style = "height: 500px; "},
+            columns: UserPackagesGrid.Columns(
+                     UserPackagesGrid.Column("SENDER", "Sender"),
+                     UserPackagesGrid.Column("PACKAGEDESCRIPTION", "Package Description"),
+                     UserPackagesGrid.Column("FIN_COST", "Final Price"),
+                     UserPackagesGrid.Column("ADDRES", "Address"),
+                     UserPackagesGrid.Column("INDEX", "Index")
+                 )                                               
+            )
+    </div>
+</body>
+</html>

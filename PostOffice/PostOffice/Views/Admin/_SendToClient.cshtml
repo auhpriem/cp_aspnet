@@ -1,0 +1,98 @@
+﻿@model PostOffice.Models.UserOperationModel
+
+@using (Html.BeginForm("SendToClientAction", "Admin", new { CurrentOperation = 2 }, FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+<fieldset>
+    <legend>Recipient</legend>
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.s_iduser)
+            @Html.DropDownListFor(model => model.sendToClient.s_iduser, ViewBag.userLoginList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.s_iduser)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.r_Surname)
+            @Html.EditorFor(model => model.sendToClient.r_Surname)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.r_Surname)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.r_Name)
+            @Html.EditorFor(model => model.sendToClient.r_Name)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.r_Name)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.r_MiddleName)
+            @Html.EditorFor(model => model.sendToClient.r_MiddleName)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.r_MiddleName)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.r_Address)
+            @Html.DropDownListFor(model => model.sendToClient.r_Address, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.r_Address)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.DeliveryAddress)
+            @Html.DropDownListFor(model => model.sendToClient.DeliveryAddress, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.DeliveryAddress)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.SendingType)
+            @Html.DropDownListFor(model => model.sendToClient.SendingType, ViewBag.packageList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.SendingType)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToClient.SendingCost)
+            @Html.EditorFor(model => model.sendToClient.SendingCost)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.SendingCost)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.ValidationMessage)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <input type="submit" value="Add a parcel" />
+    </div>
+</fieldset>
+}

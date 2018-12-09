@@ -1,0 +1,48 @@
+﻿@model PostOffice.Models.UserOperationModel
+
+@using (Html.BeginForm("SubscriptionAction", "Admin", new { CurrentOperation = 3 }, FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+<fieldset>
+    <legend>Recipient</legend>
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.subscription.s_iduser)
+            @Html.DropDownListFor(model => model.subscription.s_iduser, ViewBag.userLoginList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToClient.s_iduser)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.subscription.Edition)
+            @Html.DropDownListFor(model => model.subscription.Edition, ViewBag.editionList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.subscription.Edition)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.subscription.Period)
+            @Html.EditorFor(model => model.subscription.Period)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.subscription.Period)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.ValidationMessage)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <input type="submit" value="Add Subscribe To User" />
+    </div>
+</fieldset>
+}

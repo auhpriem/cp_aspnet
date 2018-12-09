@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Subscriptions";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    WebGrid ActiveSubscriptionsList = new WebGrid(source: ViewBag.ActiveSubscriptionsList, defaultSort: "FinalPrice", canPage: false);
+    WebGrid NonActiveSubscriptionsList = new WebGrid(source: ViewBag.NonActiveSubscriptionsList, defaultSort: "FinalPrice", canPage: false);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/PackageStatusStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewBag.Title</title>
+    <style>
+
+        .grid_table thead th:first-child {
+            width: 25%;
+        }
+
+            .grid_table thead th:first-child + th {
+                width: 25%;
+            }
+
+                .grid_table thead th:first-child + th + th {
+                    width: 25%;
+                }
+
+                    .grid_table thead th:first-child + th + th + th {
+                        width: 15%;
+                    }
+        tr{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+
+    <div class="main">
+        <table class="table_rt">
+            <tr class="tr_rt">
+                <td class="td_rt">
+                    <label style="font-size:large;">Active Subscriptions</label>
+                    @ActiveSubscriptionsList.GetHtml(
+                        tableStyle: "grid_table scroll",
+                        htmlAttributes: new {@style = " width: 100%; height: 600px; position: relative; " },
+                        columns: ActiveSubscriptionsList.Columns(
+                                 ActiveSubscriptionsList.Column("Edition", "Edition"),
+                                 ActiveSubscriptionsList.Column("Client", "Client"),
+                                 ActiveSubscriptionsList.Column("ActivationDate", "Activation Date"),
+                                 ActiveSubscriptionsList.Column("FinalPrice", "Final Price")
+                             )
+                        )
+                </td>
+                <td class="td_rt">
+                    <label style="font-size:large;">Expired Subscriptions</label>
+                    @NonActiveSubscriptionsList.GetHtml(
+                        tableStyle: "grid_table scroll",
+                        htmlAttributes: new {@style = " width: 100%; height: 600px; position: relative;" }, /*height: 500px;*/
+                        columns: NonActiveSubscriptionsList.Columns(
+                                 NonActiveSubscriptionsList.Column("Edition", "Edition"),
+                                 NonActiveSubscriptionsList.Column("Client", "Client"),
+                                 NonActiveSubscriptionsList.Column("ActivationDate", "Activation Date"),
+                                 NonActiveSubscriptionsList.Column("FinalPrice", "Final Price")
+                             )
+                        )
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

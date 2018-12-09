@@ -1,0 +1,232 @@
+﻿
+.main {
+    max-width: 100%;
+    max-height: 100%;
+    text-align: center; 
+    font-family: "Times New Roman";
+    color: #000;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 6%;
+    margin-right: 6%;
+}
+
+.search {
+    margin-bottom: 8px;
+    align-content: center;
+    overflow: hidden;
+}
+
+    .search input {
+        padding: 1%;
+        margin: 1%;
+        float: left;
+        font-size: large;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        color: #06a7e2;
+        width: 200px;
+    }
+    .search label {
+        font-size: large;
+        padding: 1%;
+        margin: 1%;
+        float: left;
+        width: 200px;
+    }
+    .search input[type=submit] {
+        width: 100px;
+        font-size: medium;
+        background-color: #65cfe7;
+        color: white;
+        text-decoration: none;
+        font-size: large;
+        float: left;
+        border: none;
+    }
+            .search input[type=submit]:hover {
+                opacity: 0.9;
+            }
+
+.form-row input {
+    padding: 1%;
+    margin: 1%;
+    color: #06a7e2;
+    font-size: medium;
+    float: initial;
+    width: 80%;
+    float: right;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.form-row {
+    margin-bottom: 8px;
+    align-content: center;
+    overflow: hidden;
+}
+
+    .form-row label {
+        font-size: large;
+        padding: 1%;
+        margin: 1%;
+        float: left;
+    }
+
+    .form-row span {
+        font-size: large;
+        color: red;
+        float: left;
+    }
+
+legend {
+    font-size: x-large;
+    color: #000;
+    padding: 1%;
+    margin: 1%;
+}
+
+.form-row input[type=submit] {
+    width: 100%;
+    background-color: #65cfe7;
+    color: white;
+    text-decoration: none;
+    font-size: large;
+    margin: auto;
+    border: none;
+    float: left;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+    .form-row input[type=submit]:hover {
+        opacity: 0.9;
+    }
+
+.grid_table th, td {
+    border: 1px solid black;
+    border-color: darkblue;
+    border-collapse: collapse;
+}
+.grid_table th {
+    text-align: center;
+}
+.grid_table thead tr:nth-child(1) th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #65cfe7;
+    border-color: darkblue;
+}
+.grid_table thead tr th a {
+    color: white;
+}
+.grid_table thead tr th {
+    background-color: #65cfe7;
+}
+
+.grid_table tfoot tr td a {
+    padding: 1%;
+    color: white;
+    background-color: #65cfe7;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.grid_table tfoot tr td {
+}
+
+.grid_table tbody tr {
+    background-color: aliceblue;
+    opacity: 0.8;
+}
+.grid_table tbody tr:hover {
+    background-color: #65cfe7;
+    opacity: 0.8;
+}
+.grid_table {
+    border-spacing: 5px;
+    margin: auto;
+    overflow-y: scroll;
+    display: block;
+    float: left;
+    height: 200px;
+    border-collapse: collapse;
+}
+
+.grid_table td, th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.table_rt {
+    border: none;
+    height: 100%;
+    width: 100%;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 5px 1rem;
+    border-collapse: separate;
+    border-color: grey;
+}
+
+.tr_rt {
+    width: 50%;
+    height: 100%;
+    border: none;
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.td_rt {
+    width: 40%;
+    height: 50%;
+    border: none;
+    display: table-cell;
+    vertical-align: inherit;
+}
+.td_lt {
+    width: 60%;
+    height: 50%;
+    border: none;
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+.DropDown {
+    padding: 1%;
+    margin: 1%;
+    color: #06a7e2;
+    font-size: medium;
+    width: 52.5%;
+    float: right;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+
+.scroll {
+    overflow-y: scroll;
+}
+
+    .scroll::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .scroll::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }

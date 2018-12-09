@@ -1,0 +1,135 @@
+﻿@model PostOffice.Models.SendPackageModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/SendPackageStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>Sending</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        submitForm = function () {
+            document.getElementById("SendForm").submit();
+            return true;
+        }
+        clearFields = function () {
+            document.getElementById('s_Surname').value = '';
+            document.getElementById('s_Name').value = '';
+            document.getElementById('s_MiddleName').value = '';
+            document.getElementById('s_Address').value = '';
+            document.getElementById('r_Surname').value = '';
+            document.getElementById('r_Name').value = '';
+            document.getElementById('r_MiddleName').value = '';
+            document.getElementById('r_Address').value = '';
+            document.getElementById('DeliveryAddress').value = '';
+            document.getElementById('SendingType').value = '';
+            document.getElementById('SendingCost').value = '';
+            return true;
+        }
+    </script>
+    <div class="main">
+        <table>
+            <tr>
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "SendForm" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <td>
+                        <fieldset>
+                            <legend>Sender</legend>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.s_Surname)
+                                @Html.EditorFor(model => model.s_Surname)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.s_Name)
+                                @Html.EditorFor(model => model.s_Name)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.s_MiddleName)
+                                @Html.EditorFor(model => model.s_MiddleName)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.s_Address)
+                                @Html.DropDownListFor(model => model.s_Address, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+                            </div>
+
+                            <div class="form-row" style="margin-bottom: 9.5%">
+                                @Html.LabelFor(model => model.DeliveryAddress)
+                                @Html.DropDownListFor(model => model.DeliveryAddress, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+                            </div>
+
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset>
+                            <legend>Recipient</legend>
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.r_Surname)
+                                @Html.EditorFor(model => model.r_Surname)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.r_Name)
+                                @Html.EditorFor(model => model.r_Name)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.r_MiddleName)
+                                @Html.EditorFor(model => model.r_MiddleName)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.r_Address)
+                                @Html.DropDownListFor(model => model.r_Address, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.SendingType)
+                                @Html.DropDownListFor(model => model.SendingType, ViewBag.packageList as SelectList, new { @class = "DropDown" })
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.SendingCost)
+                                @Html.EditorFor(model => model.SendingCost)
+                            </div>
+                        </fieldset>
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td >
+                    <div class="form-row">
+                        <input type="submit" value="Add a parcel" onclick="submitForm()" id="SubmitFormBut" style="float:right;"/>
+                    </div>
+                </td>
+                <td >
+                    <div class="form-row">
+                        <input type="submit" value="Clear Fields" onclick="clearFields()" id="ClearFieldsBut" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-row">
+                        @Html.ValidationMessageFor(model => model.ValidationMessage)
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

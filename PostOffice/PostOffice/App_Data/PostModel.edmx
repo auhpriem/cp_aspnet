@@ -1,0 +1,853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище POSTModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="IDCLIENT" />
+          </Key>
+          <Property Name="IDCLIENT" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CLIENT" Type="varchar" MaxLength="100" />
+          <Property Name="INDEX" Type="int" />
+          <Property Name="ADDRES" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Edition">
+          <Key>
+            <PropertyRef Name="IDEDITION" />
+          </Key>
+          <Property Name="IDEDITION" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="EDITION" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="COSTFORMONTH" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INDEX">
+          <Key>
+            <PropertyRef Name="INDEX" />
+            <PropertyRef Name="ADDRES" />
+          </Key>
+          <Property Name="INDEX" Type="int" Nullable="false" />
+          <Property Name="ADDRES" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="REGION" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="IDPACKAGE" />
+          </Key>
+          <Property Name="IDPACKAGE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PACKAGEDESCRIPTION" Type="varchar" MaxLength="200" />
+          <Property Name="COST" Type="decimal" Precision="4" Scale="2" />
+        </EntityType>
+        <EntityType Name="PostOffices">
+          <Key>
+            <PropertyRef Name="IDOFFICE" />
+          </Key>
+          <Property Name="OFFICE" Type="varchar" MaxLength="100" />
+          <Property Name="IDOFFICE" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="INDEX" Type="int" />
+        </EntityType>
+        <EntityType Name="ReceivedPackage">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SENDER" Type="varchar" MaxLength="20" />
+          <Property Name="RECIPIENT" Type="varchar" MaxLength="20" />
+          <Property Name="SADDRES" Type="varchar" MaxLength="200" />
+          <Property Name="SINDEX" Type="int" />
+          <Property Name="IDPACKAGE" Type="varchar" MaxLength="20" />
+          <Property Name="FINALCOST" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SentPackage">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SENDER" Type="varchar" MaxLength="20" />
+          <Property Name="RECIPIENT" Type="varchar" MaxLength="20" />
+          <Property Name="SADDRES" Type="varchar" MaxLength="200" />
+          <Property Name="SINDEX" Type="int" />
+          <Property Name="IDPACKAGE" Type="varchar" MaxLength="20" />
+          <Property Name="PRICE" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="StatusPack">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PACK_KEY" Type="int" />
+          <Property Name="ADDRES" Type="varchar" MaxLength="200" />
+          <Property Name="INDEX" Type="int" />
+        </EntityType>
+        <EntityType Name="Subscribe">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDEDITION" Type="varchar" MaxLength="5" />
+          <Property Name="IDCLIENT" Type="varchar" MaxLength="20" />
+          <Property Name="PERIOD" Type="int" Nullable="false" />
+          <Property Name="DATEACTIVATION" Type="date" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="IDUSER" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="USER" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="100" />
+          <Property Name="ACCESSRIGHTS" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK__ReceivedP__IDPAC__300424B4">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="IDPACKAGE" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="IDPACKAGE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceivedP__RECIP__2F10007B">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="RECIPIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceivedP__SENDE__2E1BDC42">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__IDPAC__267ABA7A">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="IDPACKAGE" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="IDPACKAGE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__RECIP__25869641">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="RECIPIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__SENDE__24927208">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StatusPac__PACK___2A4B4B5E">
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="0..1" />
+          <End Role="StatusPack" Type="Self.StatusPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SentPackage">
+              <PropertyRef Name="KEY" />
+            </Principal>
+            <Dependent Role="StatusPack">
+              <PropertyRef Name="PACK_KEY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscribe__IDCLI__1DE57479">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Subscribe" Type="Self.Subscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="Subscribe">
+              <PropertyRef Name="IDCLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscribe__IDEDI__1CF15040">
+          <End Role="Edition" Type="Self.Edition" Multiplicity="0..1" />
+          <End Role="Subscribe" Type="Self.Subscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="IDEDITION" />
+            </Principal>
+            <Dependent Role="Subscribe">
+              <PropertyRef Name="IDEDITION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTS">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POSTOFFICES">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="PostOffices">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="IDOFFICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECEIVED_PACKAGE">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="SINDEX" />
+              <PropertyRef Name="SADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SENTPACKAGE">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="SINDEX" />
+              <PropertyRef Name="SADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STATUS_PACK">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="StatusPack" Type="Self.StatusPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="StatusPack">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище POSTModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Edition" EntityType="Self.Edition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INDEX" EntityType="Self.INDEX" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostOffices" EntityType="Self.PostOffices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceivedPackage" EntityType="Self.ReceivedPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SentPackage" EntityType="Self.SentPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusPack" EntityType="Self.StatusPack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscribe" EntityType="Self.Subscribe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ReceivedP__IDPAC__300424B4" Association="Self.FK__ReceivedP__IDPAC__300424B4">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceivedP__RECIP__2F10007B" Association="Self.FK__ReceivedP__RECIP__2F10007B">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceivedP__SENDE__2E1BDC42" Association="Self.FK__ReceivedP__SENDE__2E1BDC42">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__IDPAC__267ABA7A" Association="Self.FK__SentPacka__IDPAC__267ABA7A">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__RECIP__25869641" Association="Self.FK__SentPacka__RECIP__25869641">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__SENDE__24927208" Association="Self.FK__SentPacka__SENDE__24927208">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StatusPac__PACK___2A4B4B5E" Association="Self.FK__StatusPac__PACK___2A4B4B5E">
+            <End Role="SentPackage" EntitySet="SentPackage" />
+            <End Role="StatusPack" EntitySet="StatusPack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscribe__IDCLI__1DE57479" Association="Self.FK__Subscribe__IDCLI__1DE57479">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Subscribe" EntitySet="Subscribe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscribe__IDEDI__1CF15040" Association="Self.FK__Subscribe__IDEDI__1CF15040">
+            <End Role="Edition" EntitySet="Edition" />
+            <End Role="Subscribe" EntitySet="Subscribe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTS" Association="Self.FK_CLIENTS">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POSTOFFICES" Association="Self.FK_POSTOFFICES">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="PostOffices" EntitySet="PostOffices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECEIVED_PACKAGE" Association="Self.FK_RECEIVED_PACKAGE">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SENTPACKAGE" Association="Self.FK_SENTPACKAGE">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STATUS_PACK" Association="Self.FK_STATUS_PACK">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="StatusPack" EntitySet="StatusPack" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="POSTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="IDCLIENT" />
+          </Key>
+          <Property Name="IDCLIENT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="INDEX" Type="Int32" />
+          <Property Name="ADDRES" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ReceivedPackage" Relationship="Self.FK__ReceivedP__RECIP__2F10007B" FromRole="Clients" ToRole="ReceivedPackage" />
+          <NavigationProperty Name="ReceivedPackage1" Relationship="Self.FK__ReceivedP__SENDE__2E1BDC42" FromRole="Clients" ToRole="ReceivedPackage" />
+          <NavigationProperty Name="SentPackage" Relationship="Self.FK__SentPacka__RECIP__25869641" FromRole="Clients" ToRole="SentPackage" />
+          <NavigationProperty Name="SentPackage1" Relationship="Self.FK__SentPacka__SENDE__24927208" FromRole="Clients" ToRole="SentPackage" />
+          <NavigationProperty Name="Subscribe" Relationship="Self.FK__Subscribe__IDCLI__1DE57479" FromRole="Clients" ToRole="Subscribe" />
+          <NavigationProperty Name="INDEX1" Relationship="Self.FK_CLIENTS" FromRole="Clients" ToRole="INDEX" />
+        </EntityType>
+        <EntityType Name="Edition">
+          <Key>
+            <PropertyRef Name="IDEDITION" />
+          </Key>
+          <Property Name="IDEDITION" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EDITION1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COSTFORMONTH" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Subscribe" Relationship="Self.FK__Subscribe__IDEDI__1CF15040" FromRole="Edition" ToRole="Subscribe" />
+        </EntityType>
+        <EntityType Name="INDEX">
+          <Key>
+            <PropertyRef Name="INDEX1" />
+            <PropertyRef Name="ADDRES" />
+          </Key>
+          <Property Name="INDEX1" Type="Int32" Nullable="false" />
+          <Property Name="ADDRES" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REGION" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_CLIENTS" FromRole="INDEX" ToRole="Clients" />
+          <NavigationProperty Name="PostOffices" Relationship="Self.FK_POSTOFFICES" FromRole="INDEX" ToRole="PostOffices" />
+          <NavigationProperty Name="ReceivedPackage" Relationship="Self.FK_RECEIVED_PACKAGE" FromRole="INDEX" ToRole="ReceivedPackage" />
+          <NavigationProperty Name="SentPackage" Relationship="Self.FK_SENTPACKAGE" FromRole="INDEX" ToRole="SentPackage" />
+          <NavigationProperty Name="StatusPack" Relationship="Self.FK_STATUS_PACK" FromRole="INDEX" ToRole="StatusPack" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="IDPACKAGE" />
+          </Key>
+          <Property Name="IDPACKAGE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PACKAGEDESCRIPTION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COST" Type="Decimal" Precision="4" Scale="2" />
+          <NavigationProperty Name="ReceivedPackage" Relationship="Self.FK__ReceivedP__IDPAC__300424B4" FromRole="Package" ToRole="ReceivedPackage" />
+          <NavigationProperty Name="SentPackage" Relationship="Self.FK__SentPacka__IDPAC__267ABA7A" FromRole="Package" ToRole="SentPackage" />
+        </EntityType>
+        <EntityType Name="PostOffices">
+          <Key>
+            <PropertyRef Name="IDOFFICE" />
+          </Key>
+          <Property Name="OFFICE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDOFFICE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INDEX" Type="Int32" />
+          <NavigationProperty Name="INDEX1" Relationship="Self.FK_POSTOFFICES" FromRole="PostOffices" ToRole="INDEX" />
+        </EntityType>
+        <EntityType Name="ReceivedPackage">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SENDER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RECIPIENT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SADDRES" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SINDEX" Type="Int32" />
+          <Property Name="IDPACKAGE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FINALCOST" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__ReceivedP__RECIP__2F10007B" FromRole="ReceivedPackage" ToRole="Clients" />
+          <NavigationProperty Name="Clients1" Relationship="Self.FK__ReceivedP__SENDE__2E1BDC42" FromRole="ReceivedPackage" ToRole="Clients" />
+          <NavigationProperty Name="INDEX" Relationship="Self.FK_RECEIVED_PACKAGE" FromRole="ReceivedPackage" ToRole="INDEX" />
+          <NavigationProperty Name="Package" Relationship="Self.FK__ReceivedP__IDPAC__300424B4" FromRole="ReceivedPackage" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="SentPackage">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SENDER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RECIPIENT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SADDRES" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SINDEX" Type="Int32" />
+          <Property Name="IDPACKAGE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PRICE" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__SentPacka__RECIP__25869641" FromRole="SentPackage" ToRole="Clients" />
+          <NavigationProperty Name="Clients1" Relationship="Self.FK__SentPacka__SENDE__24927208" FromRole="SentPackage" ToRole="Clients" />
+          <NavigationProperty Name="INDEX" Relationship="Self.FK_SENTPACKAGE" FromRole="SentPackage" ToRole="INDEX" />
+          <NavigationProperty Name="Package" Relationship="Self.FK__SentPacka__IDPAC__267ABA7A" FromRole="SentPackage" ToRole="Package" />
+          <NavigationProperty Name="StatusPack" Relationship="Self.FK__StatusPac__PACK___2A4B4B5E" FromRole="SentPackage" ToRole="StatusPack" />
+        </EntityType>
+        <EntityType Name="StatusPack">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PACK_KEY" Type="Int32" />
+          <Property Name="ADDRES" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="INDEX" Type="Int32" />
+          <NavigationProperty Name="INDEX1" Relationship="Self.FK_STATUS_PACK" FromRole="StatusPack" ToRole="INDEX" />
+          <NavigationProperty Name="SentPackage" Relationship="Self.FK__StatusPac__PACK___2A4B4B5E" FromRole="StatusPack" ToRole="SentPackage" />
+        </EntityType>
+        <EntityType Name="Subscribe">
+          <Key>
+            <PropertyRef Name="KEY" />
+          </Key>
+          <Property Name="KEY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDEDITION" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IDCLIENT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PERIOD" Type="Int32" Nullable="false" />
+          <Property Name="DATEACTIVATION" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Subscribe__IDCLI__1DE57479" FromRole="Subscribe" ToRole="Clients" />
+          <NavigationProperty Name="Edition" Relationship="Self.FK__Subscribe__IDEDI__1CF15040" FromRole="Subscribe" ToRole="Edition" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="IDUSER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACCESSRIGHTS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__ReceivedP__RECIP__2F10007B">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="RECIPIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceivedP__SENDE__2E1BDC42">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__RECIP__25869641">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="RECIPIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__SENDE__24927208">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscribe__IDCLI__1DE57479">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Subscribe" Type="Self.Subscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IDCLIENT" />
+            </Principal>
+            <Dependent Role="Subscribe">
+              <PropertyRef Name="IDCLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTS">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX1" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscribe__IDEDI__1CF15040">
+          <End Role="Edition" Type="Self.Edition" Multiplicity="0..1" />
+          <End Role="Subscribe" Type="Self.Subscribe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="IDEDITION" />
+            </Principal>
+            <Dependent Role="Subscribe">
+              <PropertyRef Name="IDEDITION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POSTOFFICES">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="PostOffices" Type="Self.PostOffices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX1" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="PostOffices">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="IDOFFICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECEIVED_PACKAGE">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX1" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="SINDEX" />
+              <PropertyRef Name="SADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SENTPACKAGE">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX1" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="SINDEX" />
+              <PropertyRef Name="SADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STATUS_PACK">
+          <End Role="INDEX" Type="Self.INDEX" Multiplicity="0..1" />
+          <End Role="StatusPack" Type="Self.StatusPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INDEX">
+              <PropertyRef Name="INDEX1" />
+              <PropertyRef Name="ADDRES" />
+            </Principal>
+            <Dependent Role="StatusPack">
+              <PropertyRef Name="INDEX" />
+              <PropertyRef Name="ADDRES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReceivedP__IDPAC__300424B4">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="ReceivedPackage" Type="Self.ReceivedPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="IDPACKAGE" />
+            </Principal>
+            <Dependent Role="ReceivedPackage">
+              <PropertyRef Name="IDPACKAGE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SentPacka__IDPAC__267ABA7A">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="IDPACKAGE" />
+            </Principal>
+            <Dependent Role="SentPackage">
+              <PropertyRef Name="IDPACKAGE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StatusPac__PACK___2A4B4B5E">
+          <End Role="SentPackage" Type="Self.SentPackage" Multiplicity="0..1" />
+          <End Role="StatusPack" Type="Self.StatusPack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SentPackage">
+              <PropertyRef Name="KEY" />
+            </Principal>
+            <Dependent Role="StatusPack">
+              <PropertyRef Name="PACK_KEY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="POSTContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Edition" EntityType="Self.Edition" />
+          <EntitySet Name="INDEX" EntityType="Self.INDEX" />
+          <EntitySet Name="Package" EntityType="Self.Package" />
+          <EntitySet Name="PostOffices" EntityType="Self.PostOffices" />
+          <EntitySet Name="ReceivedPackage" EntityType="Self.ReceivedPackage" />
+          <EntitySet Name="SentPackage" EntityType="Self.SentPackage" />
+          <EntitySet Name="StatusPack" EntityType="Self.StatusPack" />
+          <EntitySet Name="Subscribe" EntityType="Self.Subscribe" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" />
+          <AssociationSet Name="FK__ReceivedP__RECIP__2F10007B" Association="Self.FK__ReceivedP__RECIP__2F10007B">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceivedP__SENDE__2E1BDC42" Association="Self.FK__ReceivedP__SENDE__2E1BDC42">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__RECIP__25869641" Association="Self.FK__SentPacka__RECIP__25869641">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__SENDE__24927208" Association="Self.FK__SentPacka__SENDE__24927208">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscribe__IDCLI__1DE57479" Association="Self.FK__Subscribe__IDCLI__1DE57479">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Subscribe" EntitySet="Subscribe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTS" Association="Self.FK_CLIENTS">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscribe__IDEDI__1CF15040" Association="Self.FK__Subscribe__IDEDI__1CF15040">
+            <End Role="Edition" EntitySet="Edition" />
+            <End Role="Subscribe" EntitySet="Subscribe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POSTOFFICES" Association="Self.FK_POSTOFFICES">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="PostOffices" EntitySet="PostOffices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECEIVED_PACKAGE" Association="Self.FK_RECEIVED_PACKAGE">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SENTPACKAGE" Association="Self.FK_SENTPACKAGE">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STATUS_PACK" Association="Self.FK_STATUS_PACK">
+            <End Role="INDEX" EntitySet="INDEX" />
+            <End Role="StatusPack" EntitySet="StatusPack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReceivedP__IDPAC__300424B4" Association="Self.FK__ReceivedP__IDPAC__300424B4">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="ReceivedPackage" EntitySet="ReceivedPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SentPacka__IDPAC__267ABA7A" Association="Self.FK__SentPacka__IDPAC__267ABA7A">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="SentPackage" EntitySet="SentPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StatusPac__PACK___2A4B4B5E" Association="Self.FK__StatusPac__PACK___2A4B4B5E">
+            <End Role="SentPackage" EntitySet="SentPackage" />
+            <End Role="StatusPack" EntitySet="StatusPack" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище POSTModelContainer" CdmEntityContainer="POSTContext">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="POSTModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="IDCLIENT" ColumnName="IDCLIENT" />
+                <ScalarProperty Name="CLIENT" ColumnName="CLIENT" />
+                <ScalarProperty Name="INDEX" ColumnName="INDEX" />
+                <ScalarProperty Name="ADDRES" ColumnName="ADDRES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Edition">
+            <EntityTypeMapping TypeName="POSTModel.Edition">
+              <MappingFragment StoreEntitySet="Edition">
+                <ScalarProperty Name="IDEDITION" ColumnName="IDEDITION" />
+                <ScalarProperty Name="EDITION1" ColumnName="EDITION" />
+                <ScalarProperty Name="COSTFORMONTH" ColumnName="COSTFORMONTH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INDEX">
+            <EntityTypeMapping TypeName="POSTModel.INDEX">
+              <MappingFragment StoreEntitySet="INDEX">
+                <ScalarProperty Name="INDEX1" ColumnName="INDEX" />
+                <ScalarProperty Name="ADDRES" ColumnName="ADDRES" />
+                <ScalarProperty Name="REGION" ColumnName="REGION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Package">
+            <EntityTypeMapping TypeName="POSTModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="IDPACKAGE" ColumnName="IDPACKAGE" />
+                <ScalarProperty Name="PACKAGEDESCRIPTION" ColumnName="PACKAGEDESCRIPTION" />
+                <ScalarProperty Name="COST" ColumnName="COST" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostOffices">
+            <EntityTypeMapping TypeName="POSTModel.PostOffices">
+              <MappingFragment StoreEntitySet="PostOffices">
+                <ScalarProperty Name="OFFICE" ColumnName="OFFICE" />
+                <ScalarProperty Name="IDOFFICE" ColumnName="IDOFFICE" />
+                <ScalarProperty Name="INDEX" ColumnName="INDEX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceivedPackage">
+            <EntityTypeMapping TypeName="POSTModel.ReceivedPackage">
+              <MappingFragment StoreEntitySet="ReceivedPackage">
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+                <ScalarProperty Name="RECIPIENT" ColumnName="RECIPIENT" />
+                <ScalarProperty Name="SADDRES" ColumnName="SADDRES" />
+                <ScalarProperty Name="SINDEX" ColumnName="SINDEX" />
+                <ScalarProperty Name="IDPACKAGE" ColumnName="IDPACKAGE" />
+                <ScalarProperty Name="FINALCOST" ColumnName="FINALCOST" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SentPackage">
+            <EntityTypeMapping TypeName="POSTModel.SentPackage">
+              <MappingFragment StoreEntitySet="SentPackage">
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+                <ScalarProperty Name="RECIPIENT" ColumnName="RECIPIENT" />
+                <ScalarProperty Name="SADDRES" ColumnName="SADDRES" />
+                <ScalarProperty Name="SINDEX" ColumnName="SINDEX" />
+                <ScalarProperty Name="IDPACKAGE" ColumnName="IDPACKAGE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusPack">
+            <EntityTypeMapping TypeName="POSTModel.StatusPack">
+              <MappingFragment StoreEntitySet="StatusPack">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PACK_KEY" ColumnName="PACK_KEY" />
+                <ScalarProperty Name="ADDRES" ColumnName="ADDRES" />
+                <ScalarProperty Name="INDEX" ColumnName="INDEX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscribe">
+            <EntityTypeMapping TypeName="POSTModel.Subscribe">
+              <MappingFragment StoreEntitySet="Subscribe">
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="IDEDITION" ColumnName="IDEDITION" />
+                <ScalarProperty Name="IDCLIENT" ColumnName="IDCLIENT" />
+                <ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+                <ScalarProperty Name="DATEACTIVATION" ColumnName="DATEACTIVATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="POSTModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+                <ScalarProperty Name="USER" ColumnName="USER" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="ACCESSRIGHTS" ColumnName="ACCESSRIGHTS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

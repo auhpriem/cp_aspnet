@@ -1,0 +1,137 @@
+﻿@model PostOffice.Models.EditionPackageTypeModel
+
+@{
+    ViewBag.Title = "Edition Package Type";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    WebGrid editionGrid = new WebGrid(source: ViewBag.editionList, defaultSort: "IDEDITION", canPage: false);
+    WebGrid packageGrid = new WebGrid(source: ViewBag.packageList, defaultSort: "IDPACKAGE", canPage: false);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/EditionPackageTypeStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewBag.Title</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+
+    <div class="main">
+        <table class="table_rt">
+            <tr class="tr_rt">
+                <td class="td_rt">
+                    @using (Html.BeginForm("AddEditionType", "Admin", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true)
+                        <fieldset>
+                            <legend>Adding an Edition</legend>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.editionType.EditionID)
+                                @Html.EditorFor(model => model.editionType.EditionID)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.editionType.Edition)
+                                @Html.EditorFor(model => model.editionType.Edition)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.editionType.CostForMonth)
+                                @Html.EditorFor(model => model.editionType.CostForMonth)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.ValidationMessageFor(model => model.ValidationMessage_Edition)
+                            </div>
+
+                            <div class="form-row">
+                                <input type="submit" value="Add" />
+                            </div>
+                        </fieldset>
+                    }
+                </td>
+                <td class="td_rt">
+                    @using (Html.BeginForm("AddPackageType","Admin",FormMethod.Post ))
+                    {
+                        @Html.ValidationSummary(true)
+                        <fieldset>
+                            <legend>Adding Type of Package</legend>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.packageType.PackageID)
+                                @Html.EditorFor(model => model.packageType.PackageID)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.packageType.PackageDescription)
+                                @Html.EditorFor(model => model.packageType.PackageDescription)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.LabelFor(model => model.packageType.Cost)
+                                @Html.EditorFor(model => model.packageType.Cost)
+                            </div>
+
+                            <div class="form-row">
+                                @Html.ValidationMessageFor(model => model.ValidationMessage_Package)
+                            </div>
+
+                            <div class="form-row">
+                                <input type="submit" value="Add" />
+                            </div>
+                        </fieldset>
+                    }
+                </td>
+            </tr>
+            <tr class="tr_rt">
+                <td class="td_rt">
+                    @using (Html.BeginForm("DeleteSelectedEditions", "Admin", FormMethod.Post))
+                    {
+                    <div class="form-row">
+                        <input type="submit" value="Delete Selected Editions" />
+                    </div>
+                        @editionGrid.GetHtml(
+                                 tableStyle: "grid_table scroll",
+                                 htmlAttributes: new { @style = "height: 400px; width: 100%;" },
+                                 columns: editionGrid.Columns(
+                                         editionGrid.Column(format: @<text> <div class="inputCheckbox"><input type="checkbox" class="checkmark" name="edition_ids" value="@item.IDEDITION" /><span class="checkmark"></span></div></text>, header: "Select"),
+                                         editionGrid.Column("IDEDITION", "Key"),
+                                         editionGrid.Column("EDITION1", "Sender"),
+                                         editionGrid.Column("COSTFORMONTH", "Recipient")
+                                     )
+                                )
+                    }
+                </td>
+                <td class="td_rt">
+                    @using (Html.BeginForm("DeleteSelectedPackages", "Admin", FormMethod.Post))
+                    {
+                    <div class="form-row">
+                        <input type="submit" value="Delete Selected Packages" />
+                    </div>
+                        @packageGrid.GetHtml(
+                            tableStyle: "grid_table scroll",
+                            htmlAttributes: new { @style = "height: 400px; width: 100%;" },
+                            columns: packageGrid.Columns(
+                            packageGrid.Column(format: @<text> <div class="inputCheckbox"><input type="checkbox" class="checkmark" name="package_ids" value="@item.IDPACKAGE" /><span class="checkmark"></span></div></text>, header: "Select"),
+                            packageGrid.Column("IDPACKAGE", "Key"),
+                            packageGrid.Column("PACKAGEDESCRIPTION", "Sender"),
+                            packageGrid.Column("COST", "Recipient")
+                               )
+                           )
+                    }
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

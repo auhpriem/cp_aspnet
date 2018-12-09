@@ -1,0 +1,68 @@
+﻿@model PostOffice.Models.UserOperationModel
+
+@using (Html.BeginForm("SendToUserAction", "Admin", new { CurrentOperation = 1 }, FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+<fieldset>
+    <legend>Recipient</legend>
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToUser.s_iduser)
+            @Html.DropDownListFor(model => model.sendToUser.s_iduser, ViewBag.userLoginList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToUser.s_iduser)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToUser.r_iduser)
+            @Html.DropDownListFor(model => model.sendToUser.r_iduser, ViewBag.userLoginList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToUser.r_iduser)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToUser.DeliveryAddress)
+            @Html.DropDownListFor(model => model.sendToUser.DeliveryAddress, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToUser.DeliveryAddress)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToUser.SendingType)
+            @Html.DropDownListFor(model => model.sendToUser.SendingType, ViewBag.packageList as SelectList, new { @class = "DropDown" })
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToUser.SendingType)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="cnt">
+            @Html.LabelFor(model => model.sendToUser.SendingCost)
+            @Html.EditorFor(model => model.sendToUser.SendingCost)
+        </div>
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.sendToUser.SendingCost)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="vmsg">
+            @Html.ValidationMessageFor(model => model.ValidationMessage)
+        </div>
+    </div>
+
+    <div class="form-row">
+        <input type="submit" value="Add a parcel" />
+    </div>
+</fieldset>
+}

@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "ExportData";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    WebGrid subscriptionGrid = new WebGrid(source: ViewBag.subscriptionList, defaultSort: "IDEDITION", canPage: false);
+    WebGrid packageGrid = new WebGrid(source: ViewBag.packageList, defaultSort: "IDPACKAGE", canPage: false);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/EditionPackageTypeStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewBag.Title</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+
+    <div class="main">
+        <table class="table_rt">
+            <tr class="tr_rt">
+                <td class="td_rt">
+                    <a style="color:black; font-size:large;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;" href="@Url.Action("SubscriptionsExportToExcel","Admin")">Export Current Subscriptions To Excel</a>
+                </td>
+                <td class="td_rt">
+                    <a style="color:black; font-size:large;text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;" href="@Url.Action("PackagesExportToExcel","Admin")">Export Current Packages To Excel</a>
+                </td>
+            </tr>
+            <tr class="tr_rt">
+                <td class="td_rt">
+                        @subscriptionGrid.GetHtml(
+                                 tableStyle: "grid_table scroll",
+                                 htmlAttributes: new { @style = "height: 500px; width: 100%;" },
+                                 columns: subscriptionGrid.Columns(
+                                 subscriptionGrid.Column("Edition", "Edition"),
+                                 subscriptionGrid.Column("Client", "Client"),
+                                 subscriptionGrid.Column("ActivationDate", "ActivationDate"),
+                                 subscriptionGrid.Column("FinalPrice", "FinalPrice")
+                             )
+                        )
+                </td>
+                <td class="td_rt">
+                        @packageGrid.GetHtml(
+                            tableStyle: "grid_table scroll",
+                            htmlAttributes: new { @style = "height: 500px; width: 100%;" },
+                            columns: packageGrid.Columns(
+                                packageGrid.Column("KEY", "Key"),
+                                packageGrid.Column("SENDER", "Sender"),
+                                packageGrid.Column("RECIPIENT", "Recipient"),
+                                packageGrid.Column("IDPACKAGE", "Package"),
+                                packageGrid.Column("PRICE", "Price"),
+                                packageGrid.Column("SADDRES", "Address"),
+                                packageGrid.Column("SINDEX", "Index"),
+                                packageGrid.Column("ADDRES", "Current Address"),
+                                packageGrid.Column("INDEX", "Current Index")
+                        )
+                    )
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

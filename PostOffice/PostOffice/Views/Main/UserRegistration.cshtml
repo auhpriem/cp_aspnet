@@ -1,0 +1,119 @@
+﻿@model PostOffice.Models.UserRegModel
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/RegistrationStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/YesNoFunction.js"></script>
+
+    <div class="main">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Registration</legend>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.Surname)
+                    @Html.EditorFor(model => model.Surname)
+                </div>
+                <div class="form-row">
+                    @Html.ValidationMessageFor(model => model.Surname)
+                </div>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.EditorFor(model => model.Name)
+                </div>
+                <div class="form-row">
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.MiddleName)
+                    @Html.EditorFor(model => model.MiddleName)
+                </div>
+                <div class="form-row">
+                    @Html.ValidationMessageFor(model => model.MiddleName)
+                </div>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.Login)
+                    @Html.EditorFor(model => model.Login)
+                </div>
+                <div class="form-row">
+                    @Html.ValidationMessageFor(model => model.Login)
+                </div>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.UserPassword)
+                    @Html.PasswordFor(model => model.UserPassword)
+                </div>
+                <div class="form-row">
+                    @Html.ValidationMessageFor(model => model.UserPassword)
+                </div>
+
+                <div class="form-row">
+                    <table>
+                        <tr>
+                            <td width="60%">
+                                <label id="YesNoLabel">Are you admin?</label>
+                            </td>
+                            <td width="10%">
+                                <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yesCheck" />
+                            </td>
+                            <td width="5%">
+                                <p id="yes">Yes</p>
+                            </td>
+                            <td width="10%">
+                                <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck" checked="checked"/>
+                            </td>
+                            <td width="5%">
+                                <p id="no">No</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="userDiv" >
+                    <div class="form-row">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.DropDownListFor(model => model.Address, ViewBag.address as SelectList, new { @class = "DropDown" })
+                    </div>
+                    <div class="form-row">
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+
+                <div id="adminDiv" style="display: none;">
+                    <div class="form-row">
+                        @Html.LabelFor(model => model.AdminCode)
+                        @Html.PasswordFor(model => model.AdminCode, new { @onfocus = "this.value=''" })
+                    </div>
+                    <div class="form-row">
+                        @Html.ValidationMessageFor(model => model.AdminCode)
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <input type="submit" value="Register" />
+                </div>
+            </fieldset>
+        }
+    </div>
+</body>
+</html>

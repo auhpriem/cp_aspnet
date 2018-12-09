@@ -1,0 +1,82 @@
+﻿
+.main {
+    max-width: 50%;
+    text-align: center;
+    font-family: "Times New Roman";
+    color: #000;
+    margin-left: 25%
+}
+
+.form-row input {
+    padding: 2%;
+    margin: 2%;
+    color: #06a7e2;
+    font-size: medium;
+    width: 60%;
+    float: right;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.form-row {
+    align-content: center;
+    overflow: hidden;
+}
+
+    .form-row label {
+        font-size: large;
+        padding: 2%;
+        font-weight: bold;
+        margin: 2%;
+        float: left;
+    }
+
+.form-row span {
+    font-size: large;
+    color: red;
+    float: right;
+}
+
+legend {
+    font-size: x-large;
+    font-weight: bold;
+    color: #000;
+    padding: 2%;
+    margin: 2%;
+}
+
+.form-row input[type=submit] {
+    width: 100%;
+    background-color: #65cfe7;
+    color: white;
+    text-decoration: none;
+    font-size: large;
+    margin: auto;
+    border: none;
+    float: initial;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+    .form-row input[type=submit]:hover {
+        opacity: 0.9;
+    }
+
+.form-row input[type=radio] {
+}
+.form-row p {
+}
+
+.DropDown {
+    padding: 2%;
+    margin: 2%;
+    color: #06a7e2;
+    font-size: medium;
+    width: 65%;
+    float: right;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}

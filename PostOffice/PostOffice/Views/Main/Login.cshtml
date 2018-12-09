@@ -1,0 +1,48 @@
+﻿@model PostOffice.Models.LoginModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <div class="main">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Login to system Post.app</legend>
+
+                <div class="form-row">
+                    @Html.LabelFor(model => model.UserName)
+                    @Html.EditorFor(model => model.UserName)
+                </div>
+                <div class="form-row">
+                    @Html.LabelFor(model => model.UserPassword)
+                    @Html.PasswordFor(model => model.UserPassword)
+                </div>
+                <div class="form-row">
+                    <input type="submit" value="Login Page" />
+                </div>
+            </fieldset>
+        }
+    </div>
+    <div style="width:600px; height: 180px; margin:0 auto; background-image: url(../Content/SAP_inst.PNG); position: relative;">
+        <label style="font-size: xx-large; color: orange; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; position: absolute;bottom: 0;right: 0;">
+            Design Powered by SAP
+        </label>
+    </div>
+</body>
+</html>

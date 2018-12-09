@@ -1,0 +1,52 @@
+﻿@model PostOffice.Models.UserOperationModel
+
+@{
+    ViewBag.Title = "UserOperation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/UserOperationStyle.css">
+    <meta name="viewport" content="width=device-width" />
+
+    <title>ViewBag.Title</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+    <script>
+        function toggleSlidebar() {
+            document.getElementById("sidebar").classList.toggle('active');
+            document.getElementById("mainContent").classList.toggle('active');
+        }
+        $(document).ready(function () {
+            if ('@ViewBag.sidebarIsOpen' == 'False') {
+                toggleSlidebar();
+            }
+        }); 
+    </script>
+    <div id="sidebar">
+        <div class="toggle-btn" onclick="toggleSlidebar()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul>
+            <li>@Html.ActionLink("Send to User", "UserOperation", new { CurrentOperation = 1 })</li>
+            <li>@Html.ActionLink("Send to Client", "UserOperation", new { CurrentOperation = 2 })</li>
+            <li>@Html.ActionLink("Subscribe to Edition", "UserOperation", new { CurrentOperation = 3 })</li>
+        </ul>
+    </div>
+
+    <div id="mainContent" class="main">
+        @Html.Partial(ViewBag.CurrentOperation as string)
+    </div>
+</body>
+</html>

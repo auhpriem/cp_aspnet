@@ -1,0 +1,130 @@
+﻿@model PostOffice.Models.PackageStatusModel
+
+@{
+    ViewBag.Title = "Package Status";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    WebGrid sentPackageGrid = new WebGrid(source: ViewBag.sentPackageList, defaultSort: "KEY", canPage: false);//, rowsPerPage: 5);
+    WebGrid recievedPackageGrid = new WebGrid(source: ViewBag.receivedPackageList, defaultSort: "KEY", canPage: false);//, rowsPerPage: 5);
+    WebGrid packageStatusGrid = new WebGrid(source: ViewBag.packageStatusList, defaultSort: "KEY", canPage: false);//, rowsPerPage: 5);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/PackageStatusStyle.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewBag.Title</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ScrollableTablePlugin_1.0_min.js"></script>
+
+    <div class="main">
+        <table class="table_rt">
+            <tr class="tr_rt">
+                <td class="td_lt">
+                    @using (Html.BeginForm("PackageStatus", "Admin", FormMethod.Get))
+                    {
+                        <div class="search">
+                            <label>Sent Packages</label>
+                            <input type="text" name="sentSearch" value="@ViewBag.sentSearch" placeholder="Search" />
+                            <input type="submit" value="Search" />
+                        </div>
+                    }
+                    @sentPackageGrid.GetHtml(
+                        tableStyle: "grid_table scroll",
+                        columns: sentPackageGrid.Columns(
+                            sentPackageGrid.Column("KEY", "Key"),
+                            sentPackageGrid.Column("SENDER", "Sender"),
+                            sentPackageGrid.Column("RECIPIENT", "Recipient"),
+                            sentPackageGrid.Column("IDPACKAGE", "Package"),
+                            sentPackageGrid.Column("PRICE", "Price"),
+                            sentPackageGrid.Column("SADDRES", "Address"),
+                            sentPackageGrid.Column("SINDEX", "Index")
+                       )
+                    )
+                </td>
+                <td class="td_rt">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.ValidationSummary(true)
+                    <fieldset>
+                        <legend>Sender</legend>
+
+                        <div class="form-row">
+                            @Html.LabelFor(model => model.PackageKey)
+                            @Html.DropDownListFor(model => model.PackageKey, ViewBag.packageKeysList as SelectList, new { @class = "DropDown" })
+                        </div>
+
+                        <div class="form-row">
+                            @Html.LabelFor(model => model.Address)
+                            @Html.DropDownListFor(model => model.Address, ViewBag.addressList as SelectList, new { @class = "DropDown" })
+                        </div>
+
+                        <div class="form-row">
+                            <div class="vmsg">
+                                @Html.ValidationMessageFor(model => model.ValidationMessage)
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <input type="submit" value="Update Status" style="float:right;" />
+                        </div>
+                    </fieldset>
+                    }
+                </td>
+            </tr>
+            <tr class="tr_rt">
+                <td class="td_lt">
+                    @using (Html.BeginForm("PackageStatus", "Admin", FormMethod.Get))
+                    {
+                        <div class="search">
+                            <label>Recieved Packages</label>
+                            <input type="text" name="receivedSearch" value="@ViewBag.receivedSearch" placeholder="Search" style="float: left;" />
+                            <input type="submit" value="Search" style="float: left;" />
+                        </div>
+                    }
+                    @recievedPackageGrid.GetHtml(
+                        tableStyle: "grid_table scroll",
+                        columns: sentPackageGrid.Columns(
+                            sentPackageGrid.Column("KEY", "Key"),
+                            sentPackageGrid.Column("SENDER", "Sender"),
+                            sentPackageGrid.Column("RECIPIENT", "Recipient"),
+                            sentPackageGrid.Column("IDPACKAGE", "Package"),
+                            sentPackageGrid.Column("FINALCOST", "Price"),
+                            sentPackageGrid.Column("SADDRES", "Address"),
+                            sentPackageGrid.Column("SINDEX", "Index")
+                       )
+                    )
+                </td>
+                <td class="td_rt">
+                    @using (Html.BeginForm("PackageStatus", "Admin", FormMethod.Get))
+                    {
+                        <div class="search">
+                            <label style="width:150px;">Package Statuses</label>
+                            <input type="text" name="packStatusSearch" value="@ViewBag.packStatusSearch" placeholder="Search" style="float: left;" />
+                            <input type="submit" value="Search" style="float: left;" />
+                        </div>
+                    }
+                    @packageStatusGrid.GetHtml(
+                        //htmlAttributes: new { @style = "float: inherit;" },
+                        tableStyle: "grid_table scroll",
+                        columns: sentPackageGrid.Columns(
+                            sentPackageGrid.Column("PACK_KEY", "Package Key"),
+                            sentPackageGrid.Column("ADDRES", "Current Address"),
+                            sentPackageGrid.Column("INDEX", "Current Index")
+                       )
+                    )
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

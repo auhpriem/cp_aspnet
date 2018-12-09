@@ -1,0 +1,108 @@
+﻿@model  PostOffice.Models.UserAddresModel
+
+@{
+    ViewBag.Title = "Search Index/Address";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="~/Content/CommonStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IndexAddressStyle.css">
+    <title>IndexAddress</title>
+    <style>
+    </style>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=8768cee4-8d46-497f-890d-34bb0e48a4d2&lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap;
+        var firstGeoObject, secondGeoObject;
+        var multiRoute;
+
+        function init() {
+                myMap = new ymaps.Map("map", {
+                center: [53.89 , 27.56],
+                zoom: 7
+            });
+        }
+        function setMapPlacemark1() {
+            ymaps.geocode('Беларусь, ' + document.getElementById("Address1").value.substring(8), {
+                results: 1
+            }).then(function (res) {
+                myMap.geoObjects.remove(firstGeoObject);
+                firstGeoObject = res.geoObjects.get(0),
+                    coords = firstGeoObject.geometry.getCoordinates(),
+                    bounds = firstGeoObject.properties.get('boundedBy');
+                firstGeoObject.options.set('preset', 'islands#darkBlueDotIconWithCaption');
+                firstGeoObject.properties.set('iconCaption', firstGeoObject.getAddressLine());
+                myMap.geoObjects.add(firstGeoObject);
+                myMap.setBounds(bounds, {
+                    checkZoomRange: true
+                });
+                setRoute();
+            });
+        }
+        function setMapPlacemark2() {
+            ymaps.geocode('Беларусь, ' + document.getElementById("Address2").value.substring(8), {
+                results: 1
+            }).then(function (res) {
+                myMap.geoObjects.remove(secondGeoObject);
+                secondGeoObject = res.geoObjects.get(0),
+                    coords = secondGeoObject.geometry.getCoordinates(),
+                    bounds = secondGeoObject.properties.get('boundedBy');
+                secondGeoObject.options.set('preset', 'islands#darkBlueDotIconWithCaption');
+                secondGeoObject.properties.set('iconCaption', secondGeoObject.getAddressLine());
+                myMap.geoObjects.add(secondGeoObject);
+                myMap.setBounds(bounds, {
+                    checkZoomRange: true
+                });
+                setRoute();
+            });
+        }
+        function setRoute() {
+            if (firstGeoObject != null && secondGeoObject != null) {
+                myMap.geoObjects.remove(multiRoute);
+                multiRoute = new ymaps.multiRouter.MultiRoute({
+                    referencePoints: [
+                        firstGeoObject,
+                        secondGeoObject
+                    ]
+                }, {
+                        boundsAutoApply: true
+                    });
+                myMap.geoObjects.add(multiRoute);
+            }
+        }
+        function clearmap() {
+            myMap.geoObjects.removeAll();
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <table style="width: 100%;">
+            <tr style="width: 100%;">
+                <td>
+                    <div class="search">
+                        @Html.LabelFor(model => model.Address1)
+                        @Html.DropDownListFor(model => model.Address1, ViewBag.addressList as SelectList, new { @class = "DropDown", @onchange = "setMapPlacemark1()" })
+                    </div>
+                </td>
+                <td>
+                    <div class="search" style="width: 100%;">
+                        @Html.LabelFor(model => model.Address2)
+                        @Html.DropDownListFor(model => model.Address2, ViewBag.addressList as SelectList, new { @class = "DropDown", @onchange = "setMapPlacemark2()" })
+                        <input type="submit" onclick="clearmap()" value="Clear Map Points" style="width: 150px; float:left;" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div id="map"></div>
+    </div>
+</body>
+</html>
